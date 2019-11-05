@@ -44,9 +44,9 @@ static int16_t measurements_temp[MEDIAN_SAMPLES];
 static int16_t measurements_hum[MEDIAN_SAMPLES];
 #endif
 
-esp_err_t measurement_init(int32_t gpio_num)
+esp_err_t measurement_init()
 {
-	return platform_measurement_init(gpio_num);
+	return platform_measurement_init();
 }
 
 static esp_err_t measurement_read_raw(int16_t* temeprature, int16_t* humidity)

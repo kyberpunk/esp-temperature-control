@@ -114,13 +114,18 @@ static void measurement_task_run(void* pvParameters)
 
 esp_err_t measurement_task_init(measurement_config_t config)
 {
+	esp_err_t result = ESP_OK;
+	result = measurement_init();
+	if (result != ESP_OK)
+	{
+		return result;
+	}
 	if (config.interval_ms == 0)
 	{
 		return ESP_ERR_INVALID_ARG;
 	}
 	measurement_task_current_config = config;
-	measurement_init(measurement_task_current_config.pin_number);
-	return ESP_OK;
+	return result;
 }
 
 esp_err_t measurement_task_start(measurement_task_cb_t callback, void* context)

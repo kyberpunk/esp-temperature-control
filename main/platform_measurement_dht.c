@@ -30,17 +30,15 @@
 #include "dht.h"
 
 #define DHT_SENSOR_TYPE DHT_TYPE_AM2301
-
-static int32_t measurement_gpio_num;
+#define DHT_GPIO_NUM GPIO_NUM_18
 
 esp_err_t platform_measurement_init(int32_t gpio_num)
 {
-	measurement_gpio_num = gpio_num;
 	return ESP_OK;
 }
 
 esp_err_t platform_measurement_read(int16_t* temperature, int16_t* humidity)
 {
 	return dht_read_data(DHT_SENSOR_TYPE,
-				measurement_gpio_num, humidity, temperature);
+			DHT_GPIO_NUM, humidity, temperature);
 }

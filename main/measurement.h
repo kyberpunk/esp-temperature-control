@@ -31,7 +31,7 @@
 
 #include <esp_err.h>
 
-esp_err_t measurement_init(int32_t gpio_num);
+esp_err_t measurement_init();
 
 esp_err_t measurement_read(float* temperature, float* humidity);
 

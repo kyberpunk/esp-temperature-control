@@ -32,7 +32,7 @@
 #include <esp_err.h>
 #include <inttypes.h>
 
-esp_err_t platform_measurement_init(int32_t gpio_num);
+esp_err_t platform_measurement_init();
 
 esp_err_t platform_measurement_read(int16_t* temperature, int16_t* humidity);
 

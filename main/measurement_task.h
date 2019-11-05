@@ -37,7 +37,6 @@ typedef struct measurement_config
 {
 	uint32_t interval_ms;
 	uint32_t utc_offset_ms;
-	gpio_num_t pin_number;
 } measurement_config_t;
 
 typedef struct measurement_values

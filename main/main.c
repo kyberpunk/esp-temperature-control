@@ -44,7 +44,6 @@
 #include "mqtt_handler.h"
 
 #define TAG "main"
-#define DHT_GPIO_NUM GPIO_NUM_18
 static EventGroupHandle_t wifi_event_group;
 const int WIFI_CONNECTED_BIT = BIT0;
 const int SNTP_SYNCHRONIZED_BIT = BIT1;
@@ -125,7 +124,6 @@ static void measures_init()
 	measurement_config_t config;
 	config.interval_ms = MEASUREMENT_INTERVAL;
 	config.utc_offset_ms = MEASUREMENT_OFFSET;
-	config.pin_number = DHT_GPIO_NUM;
 	measurement_task_init(config);
 }
 
