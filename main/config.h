@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2018, The OpenThread Authors.
+ *  Copyright (c) 2019, Vit Holasek.
  *  All rights reserved.
  *
  *  Redistribution and use in source and binary forms, with or without
@@ -29,42 +29,66 @@
 #ifndef MAIN_CONFIG_H_
 #define MAIN_CONFIG_H_
 
+/**
+ * Wi-Fi SSID
+ */
 #ifndef WIFI_SSID
 #define WIFI_SSID "wifi"
 #endif
 
+/**
+ * Wi-Fi password
+ */
 #ifndef WIFI_PASSWORD
 #define WIFI_PASSWORD "password"
 #endif
 
+/**
+ * MQTT broker hostname or IP
+ */
 #ifndef GATEWAY_IP
 #define GATEWAY_IP "example.com"
 #endif
 
+/**
+ * Topic name for where measurements will be published
+ */
 #ifndef MQTT_MEASUREMENT_TOPIC
 #define MQTT_MEASUREMENT_TOPIC "sensor/temp"
 #endif
 
+/**
+ * Unique ID of this device in the system
+ */
 #ifndef DEVICE_ID
 #define DEVICE_ID "SENSOR1"
 #endif
 
+/**
+ * Measurement period in ms
+ */
 #ifndef MEASUREMENT_INTERVAL
 #define MEASUREMENT_INTERVAL 60000
 #endif
 
+/**
+ * Offset in ms to measurement period calculated as: sample_utc_ms % MEASUREMENT_INTERVAL
+ */
 #ifndef MEASUREMENT_OFFSET
 #define MEASUREMENT_OFFSET 0
 #endif
 
 /**
  * Number of samples from which median value is chosen as relevant sample,
- * it can filter out measurement errors.
+ * it can filter out measurement errors. If not defined only one samly will be read.
  */
 #ifndef MEDIAN_SAMPLES
 #define MEDIAN_SAMPLES 5
 #endif
 
+/**
+ * Delay in ms between samples used for median.
+ */
 #ifndef MEDIAN_SAMPLES_DELAY
 #define MEDIAN_SAMPLES_DELAY 500
 #endif

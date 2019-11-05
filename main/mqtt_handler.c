@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2018, The OpenThread Authors.
+ *  Copyright (c) 2019, Vit Holasek.
  *  All rights reserved.
  *
  *  Redistribution and use in source and binary forms, with or without
@@ -26,10 +26,17 @@
  *  POSSIBILITY OF SUCH DAMAGE.
  */
 
+/**
+ * @file
+ * @author Vit Holasek
+ * @brief This file implements MQTT communication handling.
+ */
+
 #include <stdbool.h>
 #include <string.h>
 #include <esp_log.h>
-#include "mqtt_client.h"
+#include <mqtt_client.h>
+
 #include "mqtt_handler.h"
 #include "parson.h"
 #include "config.h"
@@ -39,10 +46,11 @@
 static mqtt_handler_config_t mqtt_handler_config;
 static esp_mqtt_client_handle_t mqtt_client = NULL;
 
+/**
+ * Handle MQTT events.
+ */
 static esp_err_t mqtt_event_handler(esp_mqtt_event_handle_t event)
 {
-    //esp_mqtt_client_handle_t client = event->client;
-	// your_context_t *context = event->context;
 	switch (event->event_id) {
 	case MQTT_EVENT_CONNECTED:
 		ESP_LOGI(TAG, "MQTT_EVENT_CONNECTED");
@@ -84,6 +92,15 @@ esp_err_t mqtt_handler_start(void)
 
 esp_err_t mqtt_handler_publish_values(const measurement_values_t* values)
 {
+	/*
+	Serialize measurement calues to JSON in format:
+	{
+		"id": "SENSOR1",
+   		"temperature": 21.100000381469727,
+ 		"humidity": 70.900001525878906,
+		"utc": 1572982980008
+	}
+	*/
 	JSON_Value *root_value = json_value_init_object();
 	JSON_Object *root_object = json_value_get_object(root_value);
 	char *serialized_string = NULL;
@@ -93,6 +110,7 @@ esp_err_t mqtt_handler_publish_values(const measurement_values_t* values)
 	json_object_set_number(root_object, "utc", values->utc_timestamp);
 	serialized_string = json_serialize_to_string_pretty(root_value);
 	size_t length = strlen(serialized_string);
+	// Publish values to the configured topic
 	esp_mqtt_client_publish(mqtt_client, mqtt_handler_config.topic, serialized_string, length, 1, false);
 	json_free_serialized_string(serialized_string);
 	json_value_free(root_value);

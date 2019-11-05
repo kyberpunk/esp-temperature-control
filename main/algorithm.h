@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2018, The OpenThread Authors.
+ *  Copyright (c) 2019, Vit Holasek.
  *  All rights reserved.
  *
  *  Redistribution and use in source and binary forms, with or without

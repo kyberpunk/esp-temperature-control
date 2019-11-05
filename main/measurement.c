@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2018, The OpenThread Authors.
+ *  Copyright (c) 2019, Vit Holasek.
  *  All rights reserved.
  *
  *  Redistribution and use in source and binary forms, with or without
@@ -26,8 +26,14 @@
  *  POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "freertos/FreeRTOS.h"
-#include "freertos/task.h"
+/**
+ * @file
+ * @author Vit Holasek
+ * @brief Implementation of functions for measuring temperature and humidity.
+ */
+
+#include <freertos/FreeRTOS.h>
+#include <freertos/task.h>
 
 #include <inttypes.h>
 #include <esp_log.h>

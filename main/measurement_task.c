@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2018, The OpenThread Authors.
+ *  Copyright (c) 2019, Vit Holasek.
  *  All rights reserved.
  *
  *  Redistribution and use in source and binary forms, with or without
@@ -26,8 +26,14 @@
  *  POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "freertos/FreeRTOS.h"
-#include "freertos/task.h"
+/**
+ * @file
+ * @author Vit Holasek
+ * @brief Measurement task implementation.
+ */
+
+#include <freertos/FreeRTOS.h>
+#include <freertos/task.h>
 #include <stdlib.h>
 #include <time.h>
 #include <sys/time.h>
@@ -43,17 +49,21 @@ static measurement_task_cb_t measurement_task_callback = NULL;
 static void* measurement_task_context = NULL;
 static TaskHandle_t current_task = NULL;
 
+/**
+ * Get current UTC time in ms (synchronized by SNTP)
+ */
 static uint64_t get_utc_now()
 {
     struct timeval tv;
     uint64_t millisecondsSinceEpoch = 0;
-
     gettimeofday(&tv, NULL);
     millisecondsSinceEpoch = (uint64_t) (tv.tv_sec) * 1000 + (uint64_t) (tv.tv_usec) / 1000;
-
     return millisecondsSinceEpoch;
 }
 
+/**
+ * Calculate time take next measurement from interval and offset
+ */
 static uint64_t get_next_cycle_start(uint64_t current_utc)
 {
 	uint64_t offset = measurement_task_current_config.utc_offset_ms;
@@ -84,6 +94,9 @@ static void measurement_task_measure()
 	}
 }
 
+/**
+ * Wait for next measurements
+ */
 static void wait_for_next_cycle(void)
 {
 	TickType_t xLastWakeTime = xTaskGetTickCount();
@@ -92,6 +105,7 @@ static void wait_for_next_cycle(void)
 	ESP_LOGI(TAG, "Current time: %llu, next cycle: %llu", utc_now, next_cycle);
 	for (;;)
 	{
+		// Check time iteratively since chip clock source and real time can be shifted after long intervals
 		vTaskDelayUntil(&xLastWakeTime, 10 / portTICK_PERIOD_MS);
 		utc_now = get_utc_now();
 		if (utc_now >= next_cycle)

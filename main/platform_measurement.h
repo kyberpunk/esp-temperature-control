@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2018, The OpenThread Authors.
+ *  Copyright (c) 2019, Vit Holasek.
  *  All rights reserved.
  *
  *  Redistribution and use in source and binary forms, with or without
@@ -29,11 +29,26 @@
 #ifndef MAIN_PLATFORM_MEASUREMENT_H_
 #define MAIN_PLATFORM_MEASUREMENT_H_
 
+/**
+ * @file
+ * @author Vit Holasek
+ * @brief This file provides platform independent abstraction for reading temperature and
+ * humidity from any sensor. This functions should be implemented using specific detector hardware.
+ */
+
 #include <esp_err.h>
 #include <inttypes.h>
 
+/**
+ * Initialize sensor for be able to read data.
+ */
 esp_err_t platform_measurement_init();
 
+/**
+ * Read current measurement from the sensor.
+ * @param[out] temperature  Pointer to integer where will be temperature value stored (0.1 units precision)
+ * @param[out] humidity  Pointer to integer where will be humidity value stored (0.1 units precision)
+ */
 esp_err_t platform_measurement_read(int16_t* temperature, int16_t* humidity);
 
 #endif /* MAIN_PLATFORM_MEASUREMENT_H_ */

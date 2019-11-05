@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2018, The OpenThread Authors.
+ *  Copyright (c) 2019, Vit Holasek.
  *  All rights reserved.
  *
  *  Redistribution and use in source and binary forms, with or without
@@ -26,26 +26,58 @@
  *  POSSIBILITY OF SUCH DAMAGE.
  */
 
+/**
+ * @file
+ * @author Vit Holasek
+ * @brief This file defines necessary functions for publishing data to MQTT protocol.
+ */
+
 #ifndef MAIN_MQTT_HANDLER_H_
 #define MAIN_MQTT_HANDLER_H_
 
 #include <esp_err.h>
 #include "measurement_task.h"
 
+/**
+ * Structure with MQTT configuration data
+ */
 typedef struct mqtt_handler_config
 {
+	/**
+	 * Hostname or IP of MQTT broker
+	 */
 	char* host;
+	/**
+	 * Topic ID for publishing measurements
+	 */
 	char* topic;
 } mqtt_handler_config_t;
 
+/**
+ * Initialize MQTT handler.
+ * @parama config  MQTT connection configuration
+ */
 esp_err_t mqtt_handler_init(mqtt_handler_config_t config);
 
+/**
+ * Connect to the broker and start MQTT communication.
+ */
 esp_err_t mqtt_handler_start(void);
 
+/**
+ * Publish measured values serialized into JSON to configured topic.
+ * @param values  Measured values
+ */
 esp_err_t mqtt_handler_publish_values(const measurement_values_t* values);
 
+/**
+ * Deinitialize MQTT handler to free allocated resources
+ */
 void mqtt_handler_deinit(void);
 
+/**
+ * Stop MQTT communication and disconnect from the broker,
+ */
 void mqtt_handler_stop(void);
 
 #endif /* MAIN_MQTT_HANDLER_H_ */
