@@ -57,7 +57,7 @@ esp_err_t measurement_init()
 
 static esp_err_t measurement_read_raw(int16_t* temeprature, int16_t* humidity)
 {
-	esp_err_t result = platform_measurement_read(humidity, temeprature);
+	esp_err_t result = platform_measurement_read(temeprature, humidity);
 	ESP_LOGI(TAG, ".measurement_read_raw(): temp: %d, hum: %d",
 			*temeprature, *humidity);
 	return result;
@@ -69,7 +69,7 @@ static esp_err_t measurement_read_median(float* temperature, float* humidity)
 	esp_err_t result = ESP_OK;
 	for (int32_t i = 0; i < MEDIAN_SAMPLES; i++)
 	{
-		result = measurement_read_raw(&measurements_hum[i], &measurements_temp[i]);
+		result = measurement_read_raw(&measurements_temp[i], &measurements_hum[i]);
 		if (result != ESP_OK)
 		{
 			return result;

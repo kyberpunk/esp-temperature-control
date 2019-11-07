@@ -82,15 +82,15 @@
  * Number of samples from which median value is chosen as relevant sample,
  * it can filter out measurement errors. If not defined only one samly will be read.
  */
-#ifndef MEDIAN_SAMPLES
-#define MEDIAN_SAMPLES 5
-#endif
+//#ifndef MEDIAN_SAMPLES
+//#define MEDIAN_SAMPLES 5
+//#endif
 
 /**
  * Delay in ms between samples used for median.
  */
-#ifndef MEDIAN_SAMPLES_DELAY
-#define MEDIAN_SAMPLES_DELAY 500
-#endif
+//#ifndef MEDIAN_SAMPLES_DELAY
+//#define MEDIAN_SAMPLES_DELAY 500
+//#endif
 
 #endif /* MAIN_CONFIG_H_ */
