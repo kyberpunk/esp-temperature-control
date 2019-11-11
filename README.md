@@ -26,6 +26,8 @@ Configuration settings such as network settings or measurements periodicity can 
 
 There is incomplete list of configuration macros:
 
+Macro constant | Description
+--- | ---
 WIFI_SSID | Wi-Fi network SSID
 WIFI_PASSWORD | Wi-Fi network password
 GATEWAY_IP | IP address or hostname of MQTT broker
