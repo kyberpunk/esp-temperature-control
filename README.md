@@ -7,10 +7,6 @@ The first step for home automation is to measure temperature data. You can build
 
 ESP32 is cheap but powerfull controller with two 32 bit processor cores and embedded Wi-Fi and Bluetooth module. ESP32 has very nice [SDK](https://docs.espressif.com/projects/esp-idf/en/latest/), large community of developers and very good support. MQTT is widespread message queue protocol which is suitable for sending and consuming data or any events. It is lightweight enough to use in embedded applications. We will use [Mosquitto](https://mosquitto.org/) broker in this sample.
 
-## Implementation description
-Measurements are synchronized by real time to have measurements on multiple devices with the same time offset.
-...
-
 ## Requirements
 You will need following components to build this application:
 * ESP32 DevKit or any other development board
@@ -19,6 +15,15 @@ You will need following components to build this application:
 * Linux or Windows machine to compile sources
 
 All components can be easily bought on Aliexpress for reasonable price.
+
+## Implementation description
+Application is implemented in C using [esp-idf](https://github.com/espressif/esp-idf) SDK. Code uses also third party sources [parson](https://github.com/kgabis/parson) for data serialization and [esp-idf-lib](https://github.com/UncleRus/esp-idf-lib) with various peripheral drivers.
+
+Application connects to network with Wi-Fi. Real time is used to measurements time stamps an synchronization, so the application needs acces to NTP server. It can be deployed in local network for offline applications. Measurements are synchronized by real time to have measurements on multiple devices with the same time offset. DHT22 sensor is used by default for measurements with data I/O on pin `GPIO18`.
+
+### Configuration
+
+### Using another sensor
 
 ## Temperature sensor wiring
 
