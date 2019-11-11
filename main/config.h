@@ -47,7 +47,11 @@
  * MQTT broker hostname or IP
  */
 #ifndef GATEWAY_IP
-#define GATEWAY_IP "example.com"
+#define GATEWAY_IP "mqtt.example.com"
+#endif
+
+#ifndef NTP_SERVER_IP
+#define NTP_SERVER_IP "ntp.example.com"
 #endif
 
 /**
