@@ -9,7 +9,7 @@ ESP32 is cheap but powerfull controller with two 32 bit processor cores and embe
 
 ## Requirements
 You will need following components to build this application:
-* ESP32 DevKit or any other development board
+* ESP32S-HiLetgo or any other ESP32 development board
 * DHT22 or DHT11 integrated temperature and humidity sensor
 * [Raspberry Pi](https://www.raspberrypi.org/) or any Linux device for MQTT broker
 * Linux or Windows machine to compile sources
@@ -38,12 +38,12 @@ MEASUREMENT_OFFSET | Offset to measurement interval in ms calculated as: sample_
 It is also possible to use another temperature sensor with custom driver implementation. In this case you should use own implementation of [main/platform_measurement.h](https://github.com/kyberpunk/esp-temperature-control/blob/master/main/platform_measurement.h) header file.
 
 ## Temperature sensor wiring
-There is sample wiring diagram how to connect DHT22 sensor to ESP32. In this example ESP32 DevKit v1 development board is used. DHT22 `VCC` pin is connected directly to ESP board `VDD 3V3` voltage output. DHT22 `GND` pin is connected to any ground pin on ESP board. `DATA` pin is connected to `GPIO18` pin with 10kΩ pull up resistor. On specific ESP32 pin can be use also internal pull up resistor instead.
+There is sample wiring diagram how to connect DHT22 sensor to ESP32. In this example ESP32S HiLetgo development board is used. DHT22 `VCC` pin is connected directly to ESP board `VDD 3V3` voltage output. DHT22 `GND` pin is connected to any ground pin on ESP board. `DATA` pin is connected to `GPIO18` pin with 10kΩ pull up resistor. On specific ESP32 pin can be use also internal pull up resistor instead.
 
 <img src="./docs/esp-temperature-control.png" width="60%" alt="ESP32 and DHT22 simple connection diagram.">
 
 ## Build
-To be able to compile the source 
+To be able to compile the source [esp-idf](https://github.com/espressif/esp-idf) SDK and ESP32 Toolchain must be installed. You can follow [official documentation](https://docs.espressif.com/projects/esp-idf/en/latest/get-started/) with concrete steps how to install it.
 
 ## Install MQTT broker
 
