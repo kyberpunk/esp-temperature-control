@@ -55,7 +55,7 @@ To flash binary into the ESP32 run:
 ```
 idf.py -p <port>
 ```
-Instead of `port` use serial interface name which is connected to ESP chip (e.g. /dev/ttyS0). On some development board it necessary to push BOOT button or BOOT button and EN combination to start flash.
+Instead of `<port>` use serial interface name which is connected to ESP chip (e.g. /dev/ttyS0). On some development board it necessary to push BOOT button or BOOT button and EN combination to start flash.
 
 ## Install MQTT broker
 
