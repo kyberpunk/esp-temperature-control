@@ -58,7 +58,18 @@ idf.py -p <port>
 Instead of `<port>` use serial interface name which is connected to ESP chip (e.g. /dev/ttyS0). On some development board it necessary to push BOOT button or BOOT button and EN combination to start flash.
 
 ## Install MQTT broker
+In this sample is used [Eclipse Mosquitto project](https://github.com/eclipse/mosquitto) as MQTT broker. It is is an open source implementation of a server for version 5.0, 3.1.1, and 3.1 of the MQTT protocol.
+
+Fastest way is to use the [Docker image](https://hub.docker.com/_/eclipse-mosquitto). Or you can simply install it from Debian repository on Raspberry Pi or build it by your own from the [GitHub repository](https://github.com/eclipse/mosquitto).
 
 ## Run
+Download and run docker image with Mosquitto:
+```
+docker pull eclipse-mosquitto
+docker run -d -p 1883:1883 -p 9001:9001
+```
+Mosquitto is started with default configuration. MQTT port 1883 and Websockets 9001 are atached on the same host machine ports.
+
+When MQTT broker is successfuly deployed you can power on the ESP32 device. Device should log successful MQTT connect event to the UART output.
 
 ## Data consumer
