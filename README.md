@@ -47,6 +47,16 @@ There is sample wiring diagram how to connect DHT22 sensor to ESP32. In this exa
 ## Build
 To be able to compile the source [esp-idf](https://github.com/espressif/esp-idf) SDK and ESP32 Toolchain must be installed. You can follow [official documentation](https://docs.espressif.com/projects/esp-idf/en/latest/get-started/) with concrete steps how to install it.
 
+To build run:
+```
+idf.py build
+```
+To flash binary into the ESP32 run:
+```
+idf.py -p <port>
+```
+Instead of `port` use serial interface name which is connected to ESP chip (e.g. /dev/ttyS0). On some development board it necessary to push BOOT button or BOOT button and EN combination to start flash.
+
 ## Install MQTT broker
 
 ## Run
