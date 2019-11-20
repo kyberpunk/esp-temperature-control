@@ -78,7 +78,7 @@ sudo apt-get install mosquitto-clients
 ```
 There is example of topic subscription command and received JSON message with temperature and humidity:
 ```
-:~$ mosquitto_sub -h raspberrypi.matrix.lan -t sensor/temp
+:~$ mosquitto_sub -h 127.0.0.1 -t sensor/temp
 {
     "id": "SENSOR1",
     "temperature": 21.600000381469727,
