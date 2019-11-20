@@ -1,5 +1,4 @@
 # Sample of sending periodical temperature sensor data from ESP32 with MQTT
-## Guide is currently in progress!
 Simple program for ESP32 SoC for reading data from temperature sensor and periodically sending them over MQTT to message queue broker. Project is used as sample hardware data producer in [IoT Dashboard guide](https://kyberpunk.github.io/iot-dashboard/).
 
 ## Overview
@@ -73,3 +72,23 @@ Mosquitto is started with default configuration. MQTT port 1883 and Websockets 9
 When MQTT broker is successfuly deployed you can power on the ESP32 device. Device should log successful MQTT connect event to the UART output.
 
 ## Data consumer
+Mosquitto project provides also a client implementation which can be used for data reception test. Install it from repository:
+```
+sudo apt-get install mosquitto-clients
+```
+There is example of topic subscription command and received JSON message with temperature and humidity:
+```
+:~$ mosquitto_sub -h raspberrypi.matrix.lan -t sensor/temp
+{
+    "id": "SENSOR1",
+    "temperature": 21.600000381469727,
+    "humidity": 69.199996948242188,
+    "utc": 1574285040011
+}
+{
+    "id": "SENSOR1",
+    "temperature": 21.600000381469727,
+    "humidity": 69.199996948242188,
+    "utc": 1574285100004
+}
+```
