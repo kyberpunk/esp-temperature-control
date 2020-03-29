@@ -72,10 +72,11 @@ static esp_err_t mqtt_event_handler(esp_mqtt_event_handle_t event)
 
 esp_err_t mqtt_handler_init(const mqtt_handler_config_t config)
 {
-	const esp_mqtt_client_config_t mqtt_cfg = {
-		.host = config.host,
-		.event_handle = mqtt_event_handler,
-	};
+	esp_mqtt_client_config_t mqtt_cfg;
+	memset((void*)&mqtt_cfg, 0, sizeof(esp_mqtt_client_config_t));
+	mqtt_cfg.host = config.host;
+	mqtt_cfg.event_handle = mqtt_event_handler;
+	mqtt_cfg.keepalive = 180;
 	mqtt_client = esp_mqtt_client_init(&mqtt_cfg);
 	if (mqtt_client == NULL)
 	{

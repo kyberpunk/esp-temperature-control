@@ -37,6 +37,7 @@
 
 #include <inttypes.h>
 #include <esp_log.h>
+#include <esp_pm.h>
 
 #include "algorithm.h"
 #include "measurement.h"
@@ -101,9 +102,14 @@ static esp_err_t measurement_read_single(float* temperature, float* humidity)
 
 esp_err_t measurement_read(float* temperature, float* humidity)
 {
+	esp_pm_lock_handle_t lock_handle;
+	// Disable power management while reading measurements
+	esp_pm_lock_create(ESP_PM_APB_FREQ_MAX, 0, "measurement", &lock_handle);
+	esp_pm_lock_acquire(lock_handle);
 #ifdef MEDIAN_SAMPLES
 	return measurement_read_median(temperature, humidity);
 #else
 	return measurement_read_single(temperature, humidity);
 #endif
+	esp_pm_lock_release(lock_handle);
 }

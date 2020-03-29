@@ -44,6 +44,7 @@
 #include <lwip/err.h>
 #include <lwip/sys.h>
 #include <esp_sntp.h>
+#include <esp_pm.h>
 
 #include "measurement_task.h"
 #include "mqtt_handler.h"
@@ -86,11 +87,14 @@ void wifi_init()
     wifi_config_t wifi_config = {
         .sta = {
             .ssid = WIFI_SSID,
-            .password = WIFI_PASSWORD
+            .password = WIFI_PASSWORD,
+			.listen_interval = 5 // Listen interval affects modem sleep period
         }
     };
     ESP_ERROR_CHECK(esp_wifi_set_mode(WIFI_MODE_STA));
     ESP_ERROR_CHECK(esp_wifi_set_config(ESP_IF_WIFI_STA, &wifi_config));
+    // Enable modem sleep mode
+    ESP_ERROR_CHECK(esp_wifi_set_ps(WIFI_PS_MAX_MODEM));
     ESP_ERROR_CHECK(esp_wifi_start());
 
     ESP_LOGI(TAG, "wifi_init_sta finished.");
@@ -153,6 +157,16 @@ static void mqtt_init(void)
 	mqtt_handler_init(config);
 }
 
+static void power_mgmt_init(void)
+{
+	// Enable automatic light sleep and adaptive frequency speed
+	esp_pm_config_esp32_t pm_config;
+	pm_config.max_freq_mhz = 80;
+	pm_config.min_freq_mhz = 10;
+	pm_config.light_sleep_enable = true;
+	ESP_ERROR_CHECK(esp_pm_configure(&pm_config));
+}
+
 void app_main(void)
 {
 	wifi_event_group = xEventGroupCreate();
@@ -183,6 +197,8 @@ void app_main(void)
 	mqtt_init();
 	mqtt_handler_start();
 
+	ESP_LOGI(TAG, "Power mgmt init");
+	power_mgmt_init();
 	ESP_LOGI(TAG, "Measurement started");
 	measures_init();
 	// Run measurements task

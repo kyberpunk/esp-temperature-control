@@ -62,14 +62,20 @@ static uint64_t get_utc_now()
 }
 
 /**
- * Calculate time take next measurement from interval and offset
+ * Calculate time difference to next cycle from interval and offset
  */
 static uint64_t get_next_cycle_start(uint64_t current_utc)
 {
 	uint64_t offset = measurement_task_current_config.utc_offset_ms;
 	uint64_t interval = measurement_task_current_config.interval_ms;
 	uint64_t difference = (current_utc + interval - offset) % interval;
-	return current_utc + interval - difference;
+	uint64_t next_cycle = interval - difference;
+	// Avoid elapsing twice in the same cycle because of time shift
+	if (next_cycle < interval / 10)
+	{
+		next_cycle += interval;
+	}
+	return next_cycle;
 }
 
 static void measurement_task_measure()
@@ -102,18 +108,9 @@ static void wait_for_next_cycle(void)
 	TickType_t xLastWakeTime = xTaskGetTickCount();
 	uint64_t utc_now = get_utc_now();
 	uint64_t next_cycle = get_next_cycle_start(utc_now);
-	ESP_LOGI(TAG, "Current time: %llu, next cycle: %llu", utc_now, next_cycle);
-	for (;;)
-	{
-		// Check time iteratively since chip clock source and real time can be shifted after long intervals
-		vTaskDelayUntil(&xLastWakeTime, 10 / portTICK_PERIOD_MS);
-		utc_now = get_utc_now();
-		if (utc_now >= next_cycle)
-		{
-			ESP_LOGI(TAG, "Cycle elapsed. Current time: %llu", utc_now);
-			break;
-		}
-	}
+	ESP_LOGI(TAG, "Current time: %llu, next cycle: %llu", utc_now, utc_now + next_cycle);
+	// Check time iteratively since chip clock source and real time can be shifted after long intervals
+	vTaskDelayUntil(&xLastWakeTime, next_cycle / portTICK_PERIOD_MS);
 }
 
 static void measurement_task_run(void* pvParameters)
