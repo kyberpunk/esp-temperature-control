@@ -50,6 +50,9 @@
 #define GATEWAY_IP "mqtt.example.com"
 #endif
 
+/**
+ * NTP server IP or DNS name.
+ */
 #ifndef NTP_SERVER_IP
 #define NTP_SERVER_IP "ntp.example.com"
 #endif
