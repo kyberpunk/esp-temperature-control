@@ -37,8 +37,16 @@
 
 #include <esp_err.h>
 
+/**
+ * Init measurement module.
+ */
 esp_err_t measurement_init();
 
+/**
+ * Read measured values.
+ * @param[out] temperature A pointer to temperature variable to be set.
+ * @param[out] temperature A pointer to humidity variable to be set.
+ */
 esp_err_t measurement_read(float* temperature, float* humidity);
 
 #endif /* MAIN_MEASUREMENT_H_ */

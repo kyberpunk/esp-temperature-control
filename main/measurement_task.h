@@ -60,7 +60,7 @@ typedef struct measurement_config
 typedef struct measurement_values
 {
 	/**
-	 * Temperature in °C.
+	 * Temperature in C.
 	 */
 	float temperature;
 	/**

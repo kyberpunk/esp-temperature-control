@@ -55,7 +55,7 @@ typedef struct mqtt_handler_config
 
 /**
  * Initialize MQTT handler.
- * @parama config  MQTT connection configuration
+ * @param config  MQTT connection configuration
  */
 esp_err_t mqtt_handler_init(mqtt_handler_config_t config);
 
