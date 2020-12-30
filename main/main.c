@@ -29,7 +29,7 @@
 /**
  * @file
  * @author Vit Holasek
- * @brief Main file with application start point.
+ * @brief Main file with application entrypoint.
  */
 
 #include <freertos/FreeRTOS.h>
